@@ -30,12 +30,19 @@ public class AIConfig {
 
     @Value("${groq.api.key}")
     private String apiKey;
+    
+    @Value("${groq.api.modelName}")
+    private String modelName;
+
+    @Value("${groq.api.baseUrl}")
+    private String baseUrl;
+
     @Bean
     public OpenAiChatModel chatModel() {
         return OpenAiChatModel.builder()
                 .apiKey(apiKey)
-                .baseUrl("https://api.groq.com/openai/v1")
-                .modelName("llama-3.3-70b-versatile")
+                .baseUrl(baseUrl)
+                .modelName(modelName)
                 .temperature(0.2)
                 .build();
     }
