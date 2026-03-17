@@ -30,7 +30,7 @@ public class AIConfig {
     @Bean
     public OpenAiChatModel chatModel() {
         return OpenAiChatModel.builder()
-                .apiKey("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")
+                .apiKey("gsk_xxxxxxx")
                 .baseUrl("https://api.groq.com/openai/v1")
                 .modelName("llama-3.3-70b-versatile")
                 .temperature(0.2)
