@@ -18,8 +18,8 @@ public class CodeSnippetExtractorService {
             if (index == -1) return content.substring(0, Math.min(2000, content.length()));
 
             // Take window around endpoint
-            int start = Math.max(0, index - 500);
-            int end = Math.min(content.length(), index + 1000);
+            int start = Math.max(0, index - 1500);
+            int end = Math.min(content.length(), index + 2000);
 
             return content.substring(start, end);
 

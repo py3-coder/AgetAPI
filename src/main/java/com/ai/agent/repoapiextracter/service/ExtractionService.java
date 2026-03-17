@@ -83,9 +83,23 @@ public class ExtractionService {
                             Path.of(ep.getSourceFile()),
                             ep.getPath()
                     );
+
                     //  skip useless content
                     if (snippet == null || snippet.length() < 50) return;
-                    String schema = schemaService.generateSchema(snippet);
+                    String input = """ 
+                            Endpoint: %s %s
+                            Extract schema ONLY for this endpoint.
+                            Code:
+                            %s
+                            """.formatted(ep.getMethod(), ep.getPath(), snippet);
+                    String schema = schemaService.generateSchema(input);
+                    if (!schema.trim().startsWith("{")) {
+                        System.out.println("Invalid schema, skipping...");
+                        return;
+                    }
+                    if (schema == null || schema.isBlank()) {
+                        schema = inferBasicSchema(snippet);
+                    }
                     ep.setRequestSchema(schema);
                     //  OPTIONAL: small delay to avoid rate limit (very useful)
                     Thread.sleep(250);
@@ -108,5 +122,21 @@ public class ExtractionService {
         RepositoryStructure rs = new RepositoryStructure();
         rs.setEndpoints(endpoints);
         return rs;
+    }
+    private String inferBasicSchema(String code) {
+        Map<String, Object> request = new HashMap<>();
+        if (code.contains("req.body")) {
+            request.put("body", "object");
+        }
+        if (code.contains("req.params")) {
+            request.put("params", "object");
+        }
+        if (code.contains("req.query")) {
+            request.put("query", "object");
+        }
+        if (code.contains("req.file") || code.contains("multer")) {
+            request.put("file", "binary");
+        }
+        return "{ \"request\": " + request.toString() + ", \"response\": {} }";
     }
 }

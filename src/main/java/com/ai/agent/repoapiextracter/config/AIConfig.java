@@ -12,6 +12,21 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class AIConfig {
+
+    //    @Value("${langchain4j.google-ai.api-key}")
+    //    private String apiKey;
+    //
+    //    @Value("${langchain4j.google-ai.model-name}")
+    //    private String modelName;
+
+    //    @Bean
+    //    public ChatLanguageModel chatLanguageModel() {
+    //        return GoogleAiGeminiChatModel.builder()
+    //                .apiKey(apiKey)
+    //                .modelName(modelName)
+    //                .temperature(0.1)
+    //                .build();
+    //    }
     @Value("${groq.api.key}")
     private String apiKey;
 
@@ -27,7 +42,7 @@ public class AIConfig {
                 .apiKey(apiKey)
                 .baseUrl(baseUrl)
                 .modelName(modelName)
-                .temperature(0.2)
+                .temperature(0.0)
                 .build();
     }
 }
