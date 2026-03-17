@@ -168,11 +168,3 @@ POST http://localhost:8080/extract
 
 ---
 
-### 🔹 Steps in Postman
-
-1. Open Postman
-2. Start the server
-3.Open Postman
-4.Hit /extract API
-5.Provide any public GitHub repo URL
-6.Get extracted APIs + schema in response
